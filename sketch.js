@@ -1,4 +1,4 @@
-var boy, cash, diamonds, jewel, sword, bgImg, boyImg, cashImg, diamondImg, jewelImg, swordImg, cashG, diamondG, jewelG, swordG, gO, endImg;
+var boy, cash, diamonds, jewel, sword, bgImg, boyImg, cashImg, diamondImg, jewelImg, swordImg, cashG, diamondG, jewelG, swordG, gO, endImg, lives;
 var PLAY = 1;
 var END = 0;
 var gameState = PLAY;
@@ -39,6 +39,7 @@ function setup() {
 
 function draw() {
   boy.x = World.mouseX;
+  lives = 5;
 
   edges = createEdgeSprites();
   boy.collide(edges);
@@ -64,9 +65,11 @@ function draw() {
   } else {
     if (swordG.isTouching(boy)) {
       swordG.destroyEach();
-      gameState = END;
+      lives = lives - 1;
+    } 
+    if (lives === 0) {
+     gameState = END;
     }
-
     if (gameState === END) {
       background.velocityY = 0;
       cashG.destroyEach();
@@ -81,6 +84,7 @@ function draw() {
   textSize(25);
   fill(0);
   text("Treasure: " + treasure, 140, 30);
+  text("Lives: " + lives, 350, 450)
 }
 
 function cash() {
