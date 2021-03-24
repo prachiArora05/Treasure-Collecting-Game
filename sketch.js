@@ -1,4 +1,5 @@
 var boy, cash, diamonds, jewel, sword, bgImg, boyImg, cashImg, diamondImg, jewelImg, swordImg, cashG, diamondG, jewelG, swordG, gO, endImg;
+var lives = 5;
 var PLAY = 1;
 var END = 0;
 var gameState = PLAY;
@@ -64,23 +65,26 @@ function draw() {
   } else {
     if (swordG.isTouching(boy)) {
       swordG.destroyEach();
+      lives = lives - 1;
+    }
+    if (lives === 0) {
       gameState = END;
     }
-
-    if (gameState === END) {
-      background.velocityY = 0;
-      cashG.destroyEach();
-      diamondG.destroyEach();
-      jewelG.destroyEach();
-      swordG.destroyEach();
-      boy.destroy();
-      gO.visible = true;
-    }
+  }
+  if (gameState === END) {
+    background.velocityY = 0;
+    cashG.destroyEach();
+    diamondG.destroyEach();
+    jewelG.destroyEach();
+    swordG.destroyEach();
+    boy.destroy();
+    gO.visible = true;
   }
   drawSprites();
   textSize(25);
   fill(0);
   text("Treasure: " + treasure, 140, 30);
+  text("Lives: " + lives, 300, 480)
 }
 
 function cash() {
